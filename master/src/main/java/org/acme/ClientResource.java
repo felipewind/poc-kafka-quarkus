@@ -25,15 +25,15 @@ public class ClientResource {
     Emitter<Client> clientEmmiter;
 
     @GET
-    @Path("/request/{start}/{end}")
+    @Path("/request/{begin}/{end}")
     @Produces(MediaType.TEXT_PLAIN)
     public String get(
-            @Parameter(example = "1") @PathParam("start") int start,
+            @Parameter(example = "1") @PathParam("begin") int begin,
             @Parameter(example = "5") @PathParam("end") int end) {
 
-        LOG.info("get() start=[" + start + "] end=[" + end + "]");
+        LOG.info("get() begin=[" + begin + "] end=[" + end + "]");
 
-        for (int i = start; i <= end; i++) {
+        for (int i = begin; i <= end; i++) {
             var client = new Client(i + "", LocalDateTime.now().toString());
 
             LOG.info("Before send message " + client);

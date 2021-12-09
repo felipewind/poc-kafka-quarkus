@@ -14,6 +14,8 @@ import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.smallrye.reactive.messaging.annotations.Blocking;
+
 @ApplicationScoped
 public class ClientSubscriber {
 
@@ -26,6 +28,7 @@ public class ClientSubscriber {
     int appProcessDelay;
 
     @Incoming("extraction-requests")
+    @Blocking(ordered = false, value = "my-custom-pool")
     public void read(Client client) throws JsonProcessingException, InterruptedException {
 
         LOG.info("read() " + client + " delay=[" + appProcessDelay + "]");
