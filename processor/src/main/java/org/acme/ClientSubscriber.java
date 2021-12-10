@@ -24,16 +24,20 @@ public class ClientSubscriber {
     @Channel("extraction-responses")
     Emitter<ClientInvestment> clientInvestmentEmmiter;
 
-    @ConfigProperty(name = "app.process.delay")
-    int appProcessDelay;
+    @ConfigProperty(name = "app.process.delay.ms")
+    int appProcessDelayMs;
 
     @Incoming("extraction-requests")
     @Blocking(ordered = false, value = "my-custom-pool")
     public void read(Client client) throws JsonProcessingException, InterruptedException {
 
-        LOG.info("read() " + client + " delay=[" + appProcessDelay + "]");
+        LOG.info("read() " + client + " delay=[" + appProcessDelayMs + "]");
 
-        Thread.sleep(appProcessDelay);
+        if ("333".equals(client.id)) {
+            throw new RuntimeException("Error 333");
+        }
+
+        Thread.sleep(appProcessDelayMs);
 
         int random = ThreadLocalRandom.current().nextInt(1, 3000);
 
