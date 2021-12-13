@@ -1,6 +1,59 @@
 # poc-kafka-quarkus
 POC to parallelize long time processing using Kafka and Quarkus.
 
+# Instructions
+
+## Running everything with Docker Compose
+
+### Compile the two projects
+
+Enter the processor folder and run:
+```
+$ ./mvnw package
+```
+
+Enter the producer folder and run:
+```
+$ ./mvnw package
+```
+
+### Run the Docker Compose
+
+On the root folder, run:
+```
+$ docker-compose up
+```
+
+If you want to run multiple instances of the processor, just pass the `scale` argument:
+```
+$ docker-compose up --scale processor=2
+```
+
+## Running in development mode
+
+### Start Kafka and Zookeeper on localhost
+
+On the root folder, run:
+```
+$ docker-compose -f docker-compose-localhost.yaml up
+```
+
+### Start producer and processor
+
+Enter the processor folder and run:
+```
+$ mvn quarkus:dev
+```
+
+Enter the producer folder and run:
+```
+$ mvn quarkus:dev -Ddebug=5006
+```
+
+
+
+
+
 # Kafka
 
 ## Partitions
